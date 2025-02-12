@@ -11,7 +11,7 @@ const generateToken = (_id) => {
 };
 
 exports.registerUser = async (req, res) => {
-    const { name, email, passsword } = req.body;
+    const { name, email, password } = req.body;
 
     if(!name || !email || !password){
         return res.status(400).json({ message: `Tous les champs sont obligatoires` });
@@ -59,5 +59,24 @@ exports.deleteUser = async (req, res, next) => {
 };
 
 exports.login = async (req, res) => {
-    
+    try {
+        const { email, password } = req.body;
+
+        const userLogin = await User.findOne({ email });
+        if(!userLogin){
+            return res.status(401).json({ message: `L'utilisateur n'existe pas` });
+        }
+        const isMatch = await bcrypt.compare( password, userLogin.password);
+        if(!isMatch){
+            return res.status(401).json({ message: `Email ou mot de passe incorrect !` });
+        }
+        const token = generateToken(userLogin._id);
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            secure: true
+        })
+        res.status(201).json({ userLogin, token });
+    } catch (error) {
+        res.status(500).json({ message: `Erreur lors de la connexion.`, error : error.message })
+    }
 }
