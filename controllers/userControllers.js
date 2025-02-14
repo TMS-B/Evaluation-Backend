@@ -11,17 +11,23 @@ const generateToken = (_id) => {
 };
 
 exports.registerUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     if(!name || !email || !password){
-        return res.status(400).json({ message: `Tous les champs sont obligatoires` });
+        return next({ statusCode: 400, message: `Tous les champs sont obligatoires` });
     }
     try {
-        const user = await User.create({ name, email, password });
+        const user = await User.create({ name, email, password, role });
+
+        const token = generateToken(user._id);
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            // secure: true
+        })
+
         res.status(201).json({ message: `L'utilisateur a été crée avec succès !`, user });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: `Erreur lors de la création de l'utilisateur` });
+        next(error);
     }
 };
 
@@ -30,7 +36,7 @@ exports.getAllUser = async (req, res) => {
         const allUser = await User.find().select('-password');
         res.status(200).json({ message: `Récupération de tous les utilisateurs`, allUser });
     } catch (error) {
-        res.status(500).json({ message: `Erreur lors de la récupération des utilisateurs` });
+        next(error);
     }
 };
 
@@ -45,7 +51,7 @@ exports.updateUser = async (req, res) => {
         }
         res.status(200).json({ message: `Utilisateur mis à jour avec succès !` });
     } catch (error) {
-        res.status(500).json({ messsage: `Erreur lors de la mis à jour de l'utilisateur` });
+        next(error)
     }
 };
 
@@ -66,16 +72,20 @@ exports.login = async (req, res) => {
         if(!userLogin){
             return res.status(401).json({ message: `L'utilisateur n'existe pas` });
         }
+
         const isMatch = await bcrypt.compare( password, userLogin.password);
         if(!isMatch){
             return res.status(401).json({ message: `Email ou mot de passe incorrect !` });
         }
+
         const token = generateToken(userLogin._id);
         res.cookie('jwt', token, {
             httpOnly: true,
-            secure: true
+            // secure: true
         })
-        res.status(201).json({ userLogin, token });
+
+        res.status(200).json({ userLogin, token });
+
     } catch (error) {
         res.status(500).json({ message: `Erreur lors de la connexion.`, error : error.message })
     }
