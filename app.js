@@ -12,8 +12,10 @@ const assetRoutes = require("./routes/assetsRoute");
 
 const cookieParser = require('cookie-parser');
 const errorHandler = require('./middleware/errorHandler');
+const cloudinaryConfig = require("./config/cloudinary");
 
 connectDB();
+cloudinaryConfig();
 
 app.use(express.json());
 app.use(cookieParser());
