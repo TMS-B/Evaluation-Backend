@@ -1,14 +1,9 @@
 require('dotenv').config();
-
 const express = require('express');
 const app = express();
-
 const connectDB = require('./config/db');
-
 const PORT = process.env.PORT;
-
 const userRoutes = require("./routes/userRoute");
-
 const cookieParser = require('cookie-parser');
 
 connectDB();
