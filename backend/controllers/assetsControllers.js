@@ -1,4 +1,4 @@
-const Assets = require('../models/assetsModel');
+const skills = require('../models/skillsModel');
 const { v2: cloudinary } = require('cloudinary');
 const fs = require('fs');
 
@@ -13,7 +13,7 @@ exports.uploadAsset = async (req, res) => {
             folder: 'images',
         });
         fs.unlinkSync(req.file.path);
-        const image = new Assets({
+        const image = new skills({
             title,
             description,
             public_id: uploadResult.public_id,
@@ -29,7 +29,7 @@ exports.uploadAsset = async (req, res) => {
 
 exports.getAllAsset = async (req, res) => {
     try {
-        const image = await Assets.find();
+        const image = await skills.find();
         res.json({ image });
     } catch (error) {
         console.error(`Impossible de récupérer le média`);
@@ -41,7 +41,7 @@ exports.updateAsset = async (req, res) => {
     const { id } = req.params;
     const { title, description } = req.body;
     try {
-        const image = await Assets.findByIdAndUpdate(
+        const image = await skills.findByIdAndUpdate(
             id,
             { title, description },
             { new: true }
@@ -58,7 +58,7 @@ exports.updateAsset = async (req, res) => {
 exports.deleteAsset = async (req, res) => {
     const { id } = req.params;
     try {
-        const image = await Assets.findByIdAndDelete(id);
+        const image = await skills.findByIdAndDelete(id);
         if (!image) {
             return res.status(404).json({ error: `Fichier introuvable` })
         }
@@ -69,7 +69,3 @@ exports.deleteAsset = async (req, res) => {
         res.status(500).json({ error: `Impossible de supprimer le fichier coté serveur` });
     }
 };
-
-// exports.idk = async (req, res) => {
-//     res.render('form');
-// };
