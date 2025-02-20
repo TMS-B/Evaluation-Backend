@@ -1,0 +1,39 @@
+const Settings = require('../models/settingsModel');
+
+exports.getSettings = async (res, req, next) => {
+    try {
+        const settings = await Settings.findOne({ userId: req.params.userId });
+
+        if(!settings) {
+            return res.status(400).json({ message: `Préférences introuvable` });
+        }
+        return res.json(settings);
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.updateSettings = async (res, req, next) => {
+    const { preferences, cookiesAccepted, cookieTypes } = req.body;
+
+    try {
+        const settings = await Settings.findOne({ userId: req.params.userId });
+        if(!settings){
+            settings = new Settings({
+                userId: req.params.userId,
+                preferences,
+                cookiesAccepted,
+                cookieTypes
+            });
+        }else {
+            settings.preferences = preferences || settings.preferences;
+            settings.cookiesAccepted = cookiesAccepted != undefined ? cookiesAccepted : settings.cookiesAccepted;
+            settings.cookieTypes = cookieTypes || settings.cookieTypes;
+        }
+
+        await settings.save();
+        return res.json({ message: `Préférences mises à jour` })
+    } catch (err) {
+        next(err);
+    }
+}

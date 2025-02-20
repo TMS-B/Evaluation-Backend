@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { uploadAsset, getAllAsset, updateAsset, deleteAsset } = require('../controllers/assetsControllers');
+const { uploadAsset, getAllAsset, updateAsset, deleteAsset } = require('../src/controllers/assetsControllers');
 const multer = require('multer');
 const upload = multer ({ dest : "uploads/"});
 

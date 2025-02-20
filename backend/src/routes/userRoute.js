@@ -7,8 +7,8 @@ const {
   deleteUser,
   login,
 } = require("../controllers/userControllers");
-const { protect, adminCheck } = require("../middleware/authMiddleware");
-const { validateRequest } = require("../middleware/validateRequest");
+const { protect, adminCheck } = require("../../middleware/authMiddleware");
+const { validateRequest } = require("../../middleware/validateRequest");
 const {
   validateRegisterUser,
   validateUpdateUser,
