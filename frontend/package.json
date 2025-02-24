@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "react-google-recaptcha": "^3.1.0",
-    "tarteaucitronjs": "^1.19.0"
-  }
-}

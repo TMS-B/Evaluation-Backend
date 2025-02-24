@@ -2,6 +2,8 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
+const axios = require('axios');
+const SITE_SECRET = process.env.SITE_SECRET
 
 const generateToken = (_id) => {
     const token = JWT.sign({ _id }, JWT_SECRET, { 
@@ -66,7 +68,12 @@ exports.deleteUser = async (req, res, next) => {
 
 exports.login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, captchaValue } = req.body;
+        const { data } = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${SITE_SECRET}&response=${captchaValue}`,
+        )
+        if(data.data.success == false){
+            return res.status(401).json({ message: `Va date ChatGPT` })
+        }
 
         const userLogin = await User.findOne({ email });
         if(!userLogin){
