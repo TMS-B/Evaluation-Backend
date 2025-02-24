@@ -39,7 +39,7 @@ exports.createSkill = async (req, res, next) => {
   }
 };
 
-exports.getAllAsset = async (req, res) => {
+exports.getAllSkill = async (req, res) => {
   try {
     const image = await Skill.find();
     res.json({ image });
@@ -49,7 +49,7 @@ exports.getAllAsset = async (req, res) => {
   }
 };
 
-exports.updateAsset = async (req, res) => {
+exports.updateSkill = async (req, res) => {
   const { id } = req.params;
   const { title, description } = req.body;
   try {
@@ -69,7 +69,7 @@ exports.updateAsset = async (req, res) => {
   }
 };
 
-exports.deleteAsset = async (req, res) => {
+exports.deleteSkill = async (req, res) => {
   const { id } = req.params;
   try {
     const skill = await Skill.findByIdAndDelete(id);

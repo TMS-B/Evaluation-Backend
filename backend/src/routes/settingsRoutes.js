@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const settingsController = require('../controllers/settingsControllers');
+const { getSettings, updateSettings } = require('../controllers/settingsControllers');
 
-router.get('/:userId', settingsController.getSettings);
+router.get('/:userId', getSettings);
 
-router.put('/:userId', settingsController.updateSettings);
+router.put('/:userId', updateSettings);
 
 module.exports = router;

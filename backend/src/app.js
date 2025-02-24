@@ -8,7 +8,7 @@ const connectDB = require("./config/db");
 const PORT = process.env.PORT;
 
 const userRoutes = require("./routes/userRoute");
-const assetRoutes = require("./routes/assetsRoute");
+const assetRoutes = require("./routes/skillsRoutes");
 const settingsRoutes = require('./routes/settingsRoutes');
 
 const cookieParser = require('cookie-parser');

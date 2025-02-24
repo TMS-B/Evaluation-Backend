@@ -32,7 +32,7 @@ exports.updateSettings = async (res, req, next) => {
         }
 
         await settings.save();
-        return res.json({ message: `Préférences mises à jour` })
+        return res.status(200).json({ message: `Préférences mises à jour` })
     } catch (err) {
         next(err);
     }
