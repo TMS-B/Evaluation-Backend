@@ -19,11 +19,9 @@ const { validateRecaptcha } = require("../middleware/reCaptcha");
 
 router.post("/register", validateRegisterUser, validateRequest, registerUser);
 
-router.get("/", protect, adminCheck, getAllUser);
-
 router.put("/:id", protect, validateUpdateUser, validateRequest, updateUser);
 
-router.delete("/:id", protect, validateDeleteUser, validateRequest, deleteUser);
+router.delete("/:id", protect, validateDeleteUser, validateRequest, adminCheck, deleteUser);
 
 router.post("/login", validateRecaptcha, validateRequest, login);
 

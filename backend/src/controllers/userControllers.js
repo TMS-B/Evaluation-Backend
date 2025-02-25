@@ -22,28 +22,9 @@ exports.registerUser = async (req, res) => {
   }
   try {
     const user = await User.create({ name, email, password, role });
-
-    // const token = generateToken(user._id);
-    // res.cookie("jwt", token, {
-    //   httpOnly: true,
-    //   // secure: true
-    //   sameSite: "none",
-    // });
-
     res
       .status(201)
       .json({ message: `L'utilisateur a été crée avec succès !`, user });
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.getAllUser = async (req, res) => {
-  try {
-    const allUser = await User.find().select("-password");
-    res
-      .status(200)
-      .json({ message: `Récupération de tous les utilisateurs`, allUser });
   } catch (error) {
     next(error);
   }
