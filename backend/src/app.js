@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const helmet = require('helmet');
 
 const app = express();
 
@@ -20,6 +21,7 @@ const cloudinaryConfig = require("./config/cloudinary");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(helmet());
 
 connectDB();
 cloudinaryConfig();

@@ -15,6 +15,8 @@ const {
   validateDeleteUser,
 } = require("../validations/authValidation");
 
+const { validateRecaptcha } = require("../middleware/reCaptcha");
+
 router.post("/register", validateRegisterUser, validateRequest, registerUser);
 
 router.get("/", protect, adminCheck, getAllUser);
@@ -23,6 +25,6 @@ router.put("/:id", protect, validateUpdateUser, validateRequest, updateUser);
 
 router.delete("/:id", protect, validateDeleteUser, validateRequest, deleteUser);
 
-router.post("/login", login);
+router.post("/login", validateRecaptcha, validateRequest, login);
 
 module.exports = router;
