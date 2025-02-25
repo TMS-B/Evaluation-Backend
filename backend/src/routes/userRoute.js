@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const {
   registerUser,
-  getAllUser,
   updateUser,
   deleteUser,
   login,
 } = require("../controllers/userControllers");
-const { protect, adminCheck } = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
+const { adminCheck } = require("../middleware/isAdmin");
 const { validateRequest } = require("../middleware/validateRequest");
 const {
   validateRegisterUser,

@@ -18,15 +18,3 @@ exports.protect = async (req, res, next) => {
         res.status(500).json({ message: `Erreur lors de la vérification du token`, error });
     }
 };
-
-exports.adminCheck = async (req, res, next) => {
-    try {
-        if(req.user.role === "admin"){
-            next();
-        }else{
-          return res.status(401).json({ message: `Vous n'êtes pas admin` })  
-        }
-    } catch (error) {
-        res.status(500).json({ message: `Erreur d'authentification admin` });
-    }
-};
