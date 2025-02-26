@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // Middleware to validate reCAPTCHA
-const validateCaptcha = async (req, res, next) => {
+export async function validateRecaptcha (req, res, next) {
   // 'captchaToken' Sent from the frontend when submitting the form
   const recaptchaResponse = req.body.captchaValue;
 
@@ -32,4 +32,4 @@ const validateCaptcha = async (req, res, next) => {
 };
 
 // Export the middleware
-export default validateCaptcha;
+export default validateRecaptcha;

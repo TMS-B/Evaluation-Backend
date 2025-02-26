@@ -1,11 +1,15 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+import mongoose, { Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
 
-const userSchema = new mongoose.Schema({
+export const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password:  { type: String, required: true, select: false },
-    role: { type: String, enum: [ "user", "admin" ], default: "user" }
+    role: { type: String, enum: [ "user", "admin" ], default: "user" },
+    skills: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Skill'
+      }]
     },
     {
         timestamps: true
@@ -21,4 +25,4 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-module.exports = mongoose.model("User", userSchema)
+export default mongoose.model("User", userSchema)

@@ -5,5 +5,4 @@ const errorHandler = (err, req, res, next) => {
     const errorCode = err.code || "SERVER_ERROR"
     res.status(statusCode).json({ success: false, message, error: errorCode, stack: err.stack });
 };
-
-module.exports = errorHandler;
+export default errorHandler;

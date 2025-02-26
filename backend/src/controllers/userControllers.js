@@ -1,17 +1,17 @@
-const User = require("../models/User");
-const bcrypt = require("bcrypt");
-const JWT = require("jsonwebtoken");
+import User from "../models/User.js";
+import { compare } from "bcrypt";
+import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET;
-const axios = require("axios");
+// import { post } from "axios";
 
 const generateToken = (_id) => {
-  const token = JWT.sign({ _id }, JWT_SECRET, {
+  const token = jwt.sign({ _id }, JWT_SECRET, {
     expiresIn: "10h",
   });
   return token;
 };
 
-exports.registerUser = async (req, res) => {
+export async function registerUser(req, res) {
   const { name, email, password, role } = req.body;
 
   if (!name || !email || !password) {
@@ -21,21 +21,21 @@ exports.registerUser = async (req, res) => {
     });
   }
   try {
-    const user = await User.create({ name, email, password, role });
+    const user = await create({ name, email, password, role });
     res
       .status(201)
       .json({ message: `L'utilisateur a été crée avec succès !`, user });
   } catch (error) {
     next(error);
   }
-};
+}
 
-exports.updateUser = async (req, res) => {
+export async function updateUser(req, res) {
   const { id } = req.params;
   const newName = req.body.name;
   const newPassword = req.body.newPassword;
   try {
-    const updateUser = await User.findByIdAndUpdate(
+    const updateUser = await findByIdAndUpdate(
       id,
       { name: newName, password: newPassword },
       { new: true }
@@ -47,34 +47,24 @@ exports.updateUser = async (req, res) => {
   } catch (error) {
     next(error);
   }
-};
+}
 
-exports.deleteUser = async (req, res, next) => {
+export async function deleteUser(req, res, next) {
   try {
-    await User.findByIdAndDelete(req.params);
+    await findByIdAndDelete(req.params);
     res
       .status(200)
       .json({ message: `L'utilisateur a été supprimé avec succès !` });
   } catch (error) {
     next(error);
   }
-};
+}
 
-exports.login = async (req, res) => {
-  const recaptchaSecretKey = process.env.RECAPTCHA_SITE_SECRET;
+export async function login(req, res, next) {
+  // const recaptchaSecretKey = process.env.RECAPTCHA_SITE_SECRET;
 
   try {
-    const { email, password, captchaValue } = req.body;
-
-    const response = await axios.post(
-      `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${captchaValue}`
-    );
-
-    if (!response.data.success) {
-      return res
-        .status(401)
-        .json({ message: `Verification de captcha a echoué` });
-    }
+    const { email, password } = req.body;
 
     const userLogin = await User.findOne({ email }).select("+password");
 
@@ -82,7 +72,7 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: `L'utilisateur n'existe pas` });
     }
 
-    const isMatch = await bcrypt.compare(password, userLogin.password);
+    const isMatch = await compare(password, userLogin.password);
     if (!isMatch) {
       return res
         .status(401)
@@ -92,6 +82,7 @@ exports.login = async (req, res) => {
     const token = generateToken(userLogin._id);
 
     res.cookie("jwt", token, {
+      expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // Jours, heures, minutes, secondes, millisecondes
       httpOnly: true,
       secure: process.env.NODE_ENV === "development" ? false : true,
       sameSite: process.env.NODE_ENV === "development" ? "lax" : "none",
@@ -99,6 +90,6 @@ exports.login = async (req, res) => {
 
     res.status(200).json({ success: true, token });
   } catch (error) {
-    res.status(500).json({ message: `Erreur lors de la connexion.`, error });
+    next(error);
   }
-};
+}

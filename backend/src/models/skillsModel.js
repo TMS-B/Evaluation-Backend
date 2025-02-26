@@ -1,13 +1,18 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const skillSchema = new mongoose.Schema({
-  titre: { type: String },
-  catégorie: { type: String },
-  niveau: { type: String, enum: ["débutant", "intermédiaire", "expert"] },
-  image: {
-    public_id: { type: String },
-    url: { type: String}
+export const skillSchema = new mongoose.Schema(
+  {
+    titre: { type: String },
+    categorie: { type: String },
+    niveau: { type: String, enum: ["débutant", "intermédiaire", "expert"] },
+    image: {
+      public_id: { type: String },
+      url: { type: String },
+    },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = mongoose.model("Skills", skillSchema);
+export default mongoose.model("Skills", skillSchema);

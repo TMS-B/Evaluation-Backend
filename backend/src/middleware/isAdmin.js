@@ -1,4 +1,4 @@
-exports.adminCheck = async (req, res, next) => {
+export async function adminCheck(req, res, next) {
     try {
         if(req.user.role === "admin"){
             next();
@@ -8,4 +8,4 @@ exports.adminCheck = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+}

@@ -1,4 +1,4 @@
-const { default: mongoose } = require('mongoose');
+import {mongoose } from 'mongoose';
 
 const mediaSchema = new mongoose.Schema({
     title: String,
@@ -7,4 +7,4 @@ const mediaSchema = new mongoose.Schema({
     url: String,
 });
 
-module.exports = mongoose.model("mediaSchema", mediaSchema)
+export default mongoose.model("mediaSchema", mediaSchema)

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const settingSchema = new mongoose.Schema({
     userId: {
@@ -20,4 +20,4 @@ const settingSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model("Settings", settingSchema);
+export default mongoose.model("Settings", settingSchema);

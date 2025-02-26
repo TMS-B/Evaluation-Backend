@@ -1,6 +1,6 @@
-const Settings = require('../models/settingsModel');
+import Settings from '../models/settingsModel.js';
 
-exports.getSettings = async (res, req, next) => {
+export const getSettings = async (res, req, next) => {
     try {
         const settings = await Settings.findOne({ userId: req.params.userId });
 
@@ -13,7 +13,7 @@ exports.getSettings = async (res, req, next) => {
     }
 };
 
-exports.updateSettings = async (res, req, next) => {
+export const updateSettings = async (res, req, next) => {
     const { preferences, cookiesAccepted, cookieTypes } = req.body;
 
     try {

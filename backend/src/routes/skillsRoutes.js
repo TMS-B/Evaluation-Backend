@@ -1,16 +1,18 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { createSkill, getAllSkill, updateSkill, deleteSkill } = require('../controllers/skillControllers');
-const multer = require('multer');
+import { createSkill, getAllSkill, updateSkill, deleteSkill } from '../controllers/skillControllers.js';
+import { protect } from '../middleware/authMiddleware.js';
+import multer from 'multer';
 const upload = multer ({ dest : "uploads/"});
 
 
-router.post('/upload', upload.single('imageFile'), createSkill);
+// router.post('/upload', upload.single('imageFile'), createSkill);
+router.post('/createSkill', upload.single('image'), createSkill);
 
-router.get('/media', getAllSkill);
+router.get('/allSkills', getAllSkill);
 
-router.put('/media/:id', updateSkill);
+router.put('/updateSkills/:id', protect, updateSkill);
 
-router.delete('/media/:id', deleteSkill);
+router.delete('/deleteSkills/:id', protect, deleteSkill);
 
-module.exports = router;
+export default router;

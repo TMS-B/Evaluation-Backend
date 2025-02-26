@@ -1,6 +1,6 @@
-const { body, param } = require("express-validator");
+import { body, param } from "express-validator";
 
-exports.validateRegisterUser = [
+export const validateRegisterUser = [
   body("name")
     .trim()
     .notEmpty()
@@ -22,7 +22,7 @@ exports.validateRegisterUser = [
     .withMessage("Le mot de passe doit contenir entre 8 et 200 caractères"),
 ];
 
-exports.validateUpdateUser = [
+export const validateUpdateUser = [
   param("id").isMongoId().withMessage("ID utilisateur manquant ou invalide"),
 
   body("email")
@@ -38,6 +38,6 @@ exports.validateUpdateUser = [
     .withMessage("Le mot de passe doit contenir entre 8 et 200 caractères"),
 ];
 
-exports.validateDeleteUser = [
+export const validateDeleteUser = [
   param("id").isMongoId().withMessage("ID utilisateur manquant ou invalide"),
 ];

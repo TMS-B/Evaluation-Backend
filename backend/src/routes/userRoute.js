@@ -1,28 +1,35 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
+import {
   registerUser,
   updateUser,
   deleteUser,
   login,
-} = require("../controllers/userControllers");
-const { protect } = require("../middleware/authMiddleware");
-const { adminCheck } = require("../middleware/isAdmin");
-const { validateRequest } = require("../middleware/validateRequest");
-const {
+} from "../controllers/userControllers.js";
+import { protect } from "../middleware/authMiddleware.js";
+import { adminCheck } from "../middleware/isAdmin.js";
+import { validateRequest } from "../middleware/validateRequest.js";
+import {
   validateRegisterUser,
   validateUpdateUser,
   validateDeleteUser,
-} = require("../validations/authValidation");
+} from "../validations/authValidation.js";
 
-const { validateRecaptcha } = require("../middleware/reCaptcha");
+// import { validateRecaptcha } from "../middleware/reCaptcha.js";
 
 router.post("/register", validateRegisterUser, validateRequest, registerUser);
 
 router.put("/:id", protect, validateUpdateUser, validateRequest, updateUser);
 
-router.delete("/:id", protect, validateDeleteUser, validateRequest, adminCheck, deleteUser);
+router.delete(
+  "/:id",
+  protect,
+  validateDeleteUser,
+  validateRequest,
+  adminCheck,
+  deleteUser
+);
 
-router.post("/login", validateRecaptcha, validateRequest, login);
+router.post("/login", validateRequest, login);
 
-module.exports = router;
+export default router;

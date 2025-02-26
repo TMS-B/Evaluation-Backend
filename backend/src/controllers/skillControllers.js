@@ -1,10 +1,10 @@
-const Skill = require("../models/skillsModel");
-const User = require("../models/User");
-const { v2: cloudinary } = require("cloudinary");
-const fs = require("fs");
+import Skill from "../models/skillsModel.js";
+import User from "../models/User.js";
+import { v2 as cloudinary } from "cloudinary";
+import { unlinkSync } from "fs";
 
-exports.createSkill = async (req, res, next) => {
-  const { titre, catégorie, niveau } = req.body;
+export async function createSkill(req, res, next) {
+  const { titre, categorie, niveau, image } = req.body;
   const userId = req.user_id;
   try {
     if (!req.file) {
@@ -16,60 +16,66 @@ exports.createSkill = async (req, res, next) => {
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "skills",
     });
-    fs.unlinkSync(req.file.path);
+    unlinkSync(req.file.path);
     const skill = new Skill({
       titre,
-      catégorie,
+      categorie,
       niveau,
       public_id: uploadResult.public_id,
       url: uploadResult.secure_url,
     });
     await skill.save();
 
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { $addToSet: { skill: newSkill } },
-      { new: true }
-    ).select("-password");
-    await user.save();
-
-    res.status(201).json({ message: `Compétences créer avec succès`, user });
+    res.status(201).json({ message: `Compétences créer avec succès`, User });
   } catch (error) {
     next(error);
   }
-};
+}
 
-exports.getAllSkill = async (req, res) => {
+export async function getAllSkill(req, res, next) {
   try {
-    const image = await Skill.find();
-    res.json({ image });
+    const skills = await Skill.find().sort({ createdAt: -1 });
+    res.json({ skills });
   } catch (error) {
-    console.error(`Impossible de récupérer le média`);
-    res.status(500).json({ error: `Something went wrong` });
+    next(error);
   }
-};
+}
 
-exports.updateSkill = async (req, res) => {
+export async function updateSkill(req, res, next) {
   const { id } = req.params;
-  const { title, description } = req.body;
+  const { titre, niveau, categorie, image } = req.body;
+  const skillId = req.skill_id;
   try {
-    const image = await Skill.findByIdAndUpdate(
+    const skill = await Skill.findByIdAndUpdate(
       id,
-      { title, description },
+      { titre, niveau, categorie, image },
       { new: true }
     );
-    if (!image) {
+    if (!skill) {
       return res
         .status(500)
         .json({ message: `Erreur lors de la modification de l'image` });
     }
-    res.json(image);
-  } catch (error) {
-    console.error(`Erreur de l'envoi coté serveur`, error);
-  }
-};
+    const user = await User.findByIdAndUpdate(
+      skillId,
+      { $addToSet: { skills: skill._id } },
+      { new: true }
+    ).select("-password");
 
-exports.deleteSkill = async (req, res) => {
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    res.json({ 
+      message: `Le fichier a bien été modifié`,
+      user: user
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function deleteSkill(req, res) {
   const { id } = req.params;
   try {
     const skill = await Skill.findByIdAndDelete(id);
@@ -84,4 +90,4 @@ exports.deleteSkill = async (req, res) => {
       .status(500)
       .json({ error: `Impossible de supprimer le fichier coté serveur` });
   }
-};
+}
