@@ -41,23 +41,27 @@ export async function getAllSkill(req, res, next) {
   }
 }
 
-export async function updateSkill(req, res, next) {
-  const { id } = req.params;
-  const { titre, niveau, categorie, image } = req.body;
-  const skillId = req.skill_id;
+export const updateSkill = async (req, res, next) => {
   try {
+    const { id } = req.params;
+    const { titre, niveau, categorie, image } = req.body;
+
+    const userId = req.user;
+
+    console.log(userId);
     const skill = await Skill.findByIdAndUpdate(
       id,
       { titre, niveau, categorie, image },
       { new: true }
     );
+
     if (!skill) {
       return res
         .status(500)
         .json({ message: `Erreur lors de la modification de l'image` });
     }
     const user = await User.findByIdAndUpdate(
-      skillId,
+      userId,
       { $addToSet: { skills: skill._id } },
       { new: true }
     ).select("-password");
@@ -66,14 +70,14 @@ export async function updateSkill(req, res, next) {
       return res.status(404).json({ message: "Utilisateur non trouvé" });
     }
 
-    res.json({ 
+    res.json({
       message: `Le fichier a bien été modifié`,
-      user: user
+      user: user,
     });
   } catch (error) {
     next(error);
   }
-}
+};
 
 export async function deleteSkill(req, res) {
   const { id } = req.params;

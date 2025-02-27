@@ -6,7 +6,7 @@ import {
   deleteUser,
   login,
 } from "../controllers/userControllers.js";
-import { protect } from "../middleware/authMiddleware.js";
+import protect from "../middleware/authMiddleware.js";
 import { adminCheck } from "../middleware/isAdmin.js";
 import { validateRequest } from "../middleware/validateRequest.js";
 import {

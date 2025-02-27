@@ -82,10 +82,10 @@ export async function login(req, res, next) {
     const token = generateToken(userLogin._id);
 
     res.cookie("jwt", token, {
-      expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // Jours, heures, minutes, secondes, millisecondes
       httpOnly: true,
-      secure: process.env.NODE_ENV === "development" ? false : true,
-      sameSite: process.env.NODE_ENV === "development" ? "lax" : "none",
+      // secure: process.env.NODE_ENV === "development" ? false : true,
+      // sameSite: process.env.NODE_ENV === "development" ? "lax" : "none",
+      secure: false,
     });
 
     res.status(200).json({ success: true, token });
