@@ -3,6 +3,9 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import morgan from "morgan";
+
+import morganMiddleware from "./middleware/morganMiddleware.js";
 
 import cookieParser from "cookie-parser";
 import errorHandler from "./middleware/errorHandler.js";
@@ -34,20 +37,16 @@ app.use(
     credentials: true,
   })
 );
+app.use(morganMiddleware);
+
 app.use(helmet());
-//morgan
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// app.get("/createCookie", (req, res) => {
-//   res.cookie("testCookie", "testValue", { httpOnly: true, secure: false });
-//   console.log(req.cookies.testCookie);
-//   res.send("Cookie created");
-// });
 
 app.use("/api/users", userRoutes);
 app.use("/api/skills", skillsRoutes);
 app.use("/api/settings", settingsRoutes);
+
 app.use(errorHandler);
 
 app.listen(PORT, () => {

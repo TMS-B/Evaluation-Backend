@@ -10,7 +10,7 @@ export async function createSkill(req, res, next) {
     if (!req.file) {
       return next({
         status: 400,
-        message: `Une image est nécéssaire à la création du compte`,
+        message: `Image is required`,
       });
     }
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
@@ -21,12 +21,14 @@ export async function createSkill(req, res, next) {
       titre,
       categorie,
       niveau,
-      public_id: uploadResult.public_id,
-      url: uploadResult.secure_url,
+      image: {  
+        public_id: uploadResult.public_id,
+        url: uploadResult.secure_url,
+      }
     });
     await skill.save();
 
-    res.status(201).json({ message: `Compétences créer avec succès`, User });
+    res.status(201).json({ message: `Skill created successfully`, User });
   } catch (error) {
     next(error);
   }
@@ -58,7 +60,7 @@ export const updateSkill = async (req, res, next) => {
     if (!skill) {
       return res
         .status(500)
-        .json({ message: `Erreur lors de la modification de l'image` });
+        .json({ message: `Error updating file` });
     }
     const user = await User.findByIdAndUpdate(
       userId,
@@ -67,11 +69,11 @@ export const updateSkill = async (req, res, next) => {
     ).select("-password");
 
     if (!user) {
-      return res.status(404).json({ message: "Utilisateur non trouvé" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.json({
-      message: `Le fichier a bien été modifié`,
+      message: `File updated successfully`,
       user: user,
     });
   } catch (error) {
@@ -79,19 +81,26 @@ export const updateSkill = async (req, res, next) => {
   }
 };
 
-export async function deleteSkill(req, res) {
-  const { id } = req.params;
+export async function deleteSkill(req, res, next) {
   try {
-    const skill = await Skill.findByIdAndDelete(id);
-    if (!skill) {
-      return res.status(404).json({ error: `Compétences introuvable` });
+    const { id } = req.params;
+
+    const userId = req.user;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: `User not found` });
     }
-    await cloudinary.uploader.destroy(skill.public_id);
-    res.json({ message: `Le fichier a bien été supprimé` });
+    const skill = await Skill.findByIdAndDelete(id);
+
+    console.log(skill);
+
+    if (!skill) {
+      return res.status(404).json({ error: `Skill not found ` });
+    }
+    await cloudinary.uploader.destroy(skill.image.public_id);
+    res.json({ message: `File deleted successfully` });
   } catch (error) {
-    console.error(`Erreur lors de la suppression`, error);
-    res
-      .status(500)
-      .json({ error: `Impossible de supprimer le fichier coté serveur` });
+    next(error);
   }
 }
