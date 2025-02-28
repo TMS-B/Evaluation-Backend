@@ -2,8 +2,8 @@ import { Link } from "react-router-dom"
 
   const skillCard = ({ skill, onDelete }) => {
     const { titre, catégorie, image, timestamp, _id } = skill;
-
-    const formatedDate = new Date(timestamp).toLocaleDateString("fr-FR", {
+    
+    const formatDate = new Date(timestamp).toLocaleDateString("fr-FR", {
       day: "numeric",
       month: "long",
       year: "numeric",
@@ -11,14 +11,15 @@ import { Link } from "react-router-dom"
 
   return (
     <div style={styles.card}>
-      <img src={ image } alt={ titre } style={styles.image} id="zoom" />
+      <img src={ image.url } alt={ titre } style={styles.image} id="zoom" />
       <div style={styles.content}>
         <h2 style={styles.title}>{ titre }</h2>
         <p>{ catégorie }</p>
-        <p><b>Publié le</b>{ formatedDate }</p>
+        <p><b>Publié le</b>{ formatDate }</p>
         <div>
           <button style={styles.deleteButton} onClick={ () => {onDelete(_id)} }>Supprimer</button>
           <Link to={`/allSkills/${_id}`} style={styles.detailButton}>Voir les détails</Link>
+          {/* <Link to={`/dashboard`} style={styles.detailButton}>Voir les détails</Link> */}
         </div>
       </div>
     </div>
@@ -35,7 +36,8 @@ const styles = {
     marginBottom: '15px',
     padding: '10px',
     maxWidth: '800px',
-    backgroundColor: '#f9f9f9',
+    backgroundColor: 'black',
+    color: 'white',
   },
  
   image: {

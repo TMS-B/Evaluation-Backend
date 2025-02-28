@@ -11,7 +11,7 @@ import multer from "multer";
 const upload = multer({ dest: "uploads/" });
 
 // router.post('/upload', upload.single('imageFile'), createSkill);
-router.post("/createSkill", upload.single("image"), createSkill);
+router.post("/createSkill", upload.single("imageFile"), createSkill);
 
 router.get("/allSkills", getAllSkill);
 

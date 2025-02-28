@@ -12,7 +12,7 @@ export async function validateRecaptcha (req, res, next) {
   }
 
   const recaptchaSecretKey = process.env.RECAPTCHA_SITE_SECRET;
-  const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${captchaValue}`;
+  const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${recaptchaResponse}`;
 
   try {
     // Make request to reCAPTCHA API to verify

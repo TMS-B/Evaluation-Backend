@@ -3,7 +3,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import morgan from "morgan";
+// import morgan from "morgan";
 
 import morganMiddleware from "./middleware/morganMiddleware.js";
 
@@ -13,7 +13,6 @@ import cloudinaryConfig from "./config/cloudinary.js";
 
 const app = express();
 
-app.use(cookieParser());
 
 import connectDB from "./config/db.js";
 
@@ -26,6 +25,7 @@ import settingsRoutes from "./routes/settingsRoutes.js";
 connectDB();
 cloudinaryConfig();
 
+app.use(cookieParser());
 app.use(
   cors({
     origin: [
@@ -34,9 +34,11 @@ app.use(
       "https://www.gstatic.com", // For reCAPTCHA
       "https://res.cloudinary.com", // For Cloudinary
     ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
-);
+); 
 app.use(morganMiddleware);
 
 app.use(helmet());

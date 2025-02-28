@@ -1,4 +1,4 @@
-import skillForm from "../components/skillForm"
+import SkillForm from "../components/skillForm"
 import { createSkill } from "../services/SkillService"
 import { useNavigate } from "react-router-dom"
 
@@ -14,7 +14,7 @@ const createSkillPage = () => {
   }
   return (
     <div>
-      <skillForm onSubmit={handleSubmit} title="Ajouter une nouvelle competence" />
+      <SkillForm onSubmit={handleSubmit} title="Ajouter une nouvelle competence" />
     </div>
   )
 };

@@ -1,6 +1,21 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const navbar = () => {
+    const [ isAuth, setIsAuth ] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const userIsAuthenticated = localStorage.getItem("isAuth") === "true"; // Vérifier si l'utilisateur est authentifié
+            setIsAuth(userIsAuthenticated); //  Mettre à jour l'état
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("isAuth");  // Supprimer le token de connexion
+        setIsAuth(false);   // Mettre à jour l'état
+        navigate("/login"); // Rediriger vers la page de connexion
+    };
+
   return (
     <nav style={styles.nav}>
         <ul style={styles.navList}>
@@ -11,12 +26,19 @@ const navbar = () => {
                 <Link to="/create" style={styles.navLink}>Create Skills</Link>
             </li>
             <li style={styles.navItem}>
-                <Link to="/login" style={styles.navLink}>Login</Link>
+                <Link to="/dashboard" style={styles.navLink}>Dashboard</Link>
+            </li>
+            <li style={styles.navItem}>
+                { isAuth ? (        // Si l'utilisateur est authentifié
+                    <button style={styles.navLink} onClick={handleLogout}>Logout</button>
+                ) : (
+                    <Link to="/login" style={styles.navLink}>Login</Link>
+                )}
             </li>
         </ul>
     </nav>
-  )
-}
+  );
+};
 
 const styles = {
     nav: {

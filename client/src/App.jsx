@@ -5,6 +5,7 @@ import Navbar from './components/navbar'
 import CreateSkillsPage from './pages/createSkillPage'
 import EditPage from './pages/EditPage'
 import SkillDetails from './components/SkillDetails'
+import Dashboard from './pages/Dashboard'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/create" element={<CreateSkillsPage/>}/>
         <Route path="/edit/:id" element={<EditPage/>}/>
         <Route path="/skills/:id" element={<SkillDetails/>}/>

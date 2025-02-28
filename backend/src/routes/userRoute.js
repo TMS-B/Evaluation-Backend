@@ -15,9 +15,11 @@ import {
   validateDeleteUser,
 } from "../validations/authValidation.js";
 
-// import { validateRecaptcha } from "../middleware/reCaptcha.js";
+import { validateRecaptcha } from "../middleware/reCaptcha.js";
 
-router.post("/register", validateRegisterUser, validateRequest, registerUser);
+router.post("/registerUser", validateRegisterUser, validateRequest, registerUser);
+
+router.post("/registerAdmin", adminCheck, validateRegisterUser, validateRequest, registerUser);
 
 router.put("/:id", protect, validateUpdateUser, validateRequest, updateUser);
 
@@ -30,6 +32,6 @@ router.delete(
   deleteUser
 );
 
-router.post("/login", validateRequest, login);
+router.post("/login", validateRequest , validateRecaptcha, login);
 
 export default router;

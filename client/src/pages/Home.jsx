@@ -10,7 +10,7 @@ const Home = () => {
     const fetchSkills = async () => {
       try {
         const data = await getAllSkills();
-        setSkills(data.data);
+        setSkills(data.skills);
       } catch (error) {
         console.error(`Error while fetching skills:`, error);
       }
@@ -56,7 +56,7 @@ const styles = {
     marginBottom: "20px",
     padding: "10px 20px",
     backgroundColor: "#007bff",
-    color: "#fff",
+    color: "black",
     textDecoration: "none",
     borderRadius: "5px",
   },

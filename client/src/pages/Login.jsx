@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 const VITE_SITE_KEY = import.meta.env.VITE_SITE_KEY;
@@ -6,8 +7,16 @@ const VITE_SITE_KEY = import.meta.env.VITE_SITE_KEY;
 const Login = () => {
   const [isAuth, setIsAuth] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setName] = useState("");
+  const [password, setPassword] = useState("");
   const recaptchaRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userIsAuthenticated = localStorage.getItem("isAuth") === "true";
+    if (userIsAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -18,16 +27,23 @@ const Login = () => {
       alert("Please verify the recaptcha!");
       return;
     }
+    try {
+      
+      const response = await axios.post(
+        "http://localhost:3101/api/users/login",
+        { email, password, captchaValue },
+        { withCredentials: true }
+      );
 
-    const response = await axios.post(
-      "http://localhost:3030/api/users/login",
-      { email, password, captchaValue },
-      { withCredentials: true }
-    );
-
-    if (response.data.success) {
-      setIsAuth(true);
+      if (response.data.success) {
+        localStorage.setItem("isAuth", "true");
+        setIsAuth(true);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
     }
+
   };
 
   return (
@@ -48,7 +64,7 @@ const Login = () => {
           value={password}
           required
           placeholder="******"
-          onChange={(event) => setName(event.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
         />
         <button type="submit">Sign in</button>
         <ReCAPTCHA sitekey={VITE_SITE_KEY} ref={recaptchaRef} />

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:3100/api/skills",
+    baseURL: "http://localhost:3101/api/skills",
 });
 
 export const getAllSkills = async () => {
@@ -10,7 +10,7 @@ export const getAllSkills = async () => {
 }
 
 export const deleteSkill = async (id) => {
-    const res = await api.delete(`/${id}`);
+    const res = await api.delete(`/deleteSkills/:id${id}`);
     return res.data;
 }
 
@@ -28,6 +28,6 @@ export const createSkill = async (skill) => {
     if(skill.imageFile){
         formData.append("imageFile", skill.imageFile);
     }
-    const res = await api.post("/skills", formData); // faire attention à la route peut etre la changer
+    const res = await api.post("/createSkill", formData);
     return res.data;
 }

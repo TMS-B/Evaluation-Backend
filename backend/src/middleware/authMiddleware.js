@@ -4,11 +4,13 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const protect = async (req, res, next) => {
   const token = req.cookies.jwt;
-
+  console.log(token);
+  
+  
   if (!token) {
     return res.status(401).json({ message: `Token manquant` });
   }
-
+  
   try {
     const decoded = JWT.verify(token, JWT_SECRET);
 

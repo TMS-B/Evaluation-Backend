@@ -5,15 +5,15 @@ const SkillForm = ({ initialData = {}, onSubmit, titre }) => {
   const [skill, setSkill] = useState({
     titre: initialData.titre || "",
     catégorie: initialData.catégorie || "",
-    niveau: initialData.niveau || "",
-    description: initialData.description || "",
+    niveau: initialData.niveau || ""
   });
 
-  const handleChange = () => {
-    const { titre, value } = skill;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
     setSkill((prev) => ({
       ...prev,
-      [titre]: value,
+      [name]: value,
     }));
   };
 
@@ -38,6 +38,7 @@ const SkillForm = ({ initialData = {}, onSubmit, titre }) => {
           <input
             type="text"
             id="titre"
+            name="titre"
             value={skill.titre}
             onChange={handleChange}
             required
@@ -48,16 +49,30 @@ const SkillForm = ({ initialData = {}, onSubmit, titre }) => {
           <input
             type="text"
             id="catégorie"
+            name="catégorie"
             value={skill.catégorie}
             onChange={handleChange}
             required
           />
         </div>
         <div>
+          <label htmlFor="niveau">Niveau:</label>
+          <select 
+          name="niveau" 
+          id="level"
+          onChange={handleChange}
+          required
+          >
+            <option value="débutant">Débutant</option>
+            <option value="intermédiaire">intermédiaire</option>
+            <option value="expert">Expert</option>
+            </select> 
+        </div>
+        <div>
           <label htmlFor="image">Image</label>
           <input 
           type="file" 
-          id="image" 
+          id="image"
           onChange={handleImageChange}
           accept="image/*"
           />
