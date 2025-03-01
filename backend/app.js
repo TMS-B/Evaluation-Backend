@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
+      process.env.CLIENT_URL || "http://localhost:5173",
       "https://www.google.com", // For reCAPTCHA
       "https://www.gstatic.com", // For reCAPTCHA
       "https://res.cloudinary.com", // For Cloudinary

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 const VITE_SITE_KEY = import.meta.env.VITE_SITE_KEY;
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 const Login = () => {
   const [isAuth, setIsAuth] = useState(false);
@@ -30,7 +31,7 @@ const Login = () => {
     try {
       
       const response = await axios.post(
-        "http://localhost:3101/api/users/login",
+        `${VITE_API_URL}/api/users/login`,
         { email, password, captchaValue },
         { withCredentials: true }
       );
