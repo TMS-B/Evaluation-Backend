@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-  const skillCard = ({ skill, onDelete }) => {
+  const SkillCard = ({ skill, onDelete }) => {
     const { titre, catégorie, image, timestamp, _id } = skill;
     
     const formatDate = new Date(timestamp).toLocaleDateString("fr-FR", {
@@ -73,4 +73,4 @@ const styles = {
   }
 };
 
-export default skillCard
+export default SkillCard

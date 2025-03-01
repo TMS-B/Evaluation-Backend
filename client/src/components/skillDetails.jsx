@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { getSkillById } from "../services/SkillService"
 
-const skillDetails = () => {
+const SkillDetails = () => {
   const { id } = useParams();
   const [skill, setSkill] = useState(null);
 
@@ -53,4 +53,4 @@ const styles = {
   },
 };
 
-export default skillDetails
+export default SkillDetails

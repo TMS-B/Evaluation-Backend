@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-const navbar = () => {
+const Navbar = () => {
     const [ isAuth, setIsAuth ] = useState(false);
     const navigate = useNavigate();
 
@@ -68,4 +68,4 @@ const styles = {
     }
 };
 
-export default navbar
+export default Navbar

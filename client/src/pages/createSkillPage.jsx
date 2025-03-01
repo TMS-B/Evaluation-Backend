@@ -2,7 +2,7 @@ import SkillForm from "../components/SkillForm"
 import { createSkill } from "../services/SkillService"
 import { useNavigate } from "react-router-dom"
 
-const createSkillPage = () => {
+const CreateSkillPage = () => {
   const navigate = useNavigate();
   const handleSubmit = async (skill) => {
     try {
@@ -20,4 +20,4 @@ const createSkillPage = () => {
 };
 
 
-export default createSkillPage
+export default CreateSkillPage
