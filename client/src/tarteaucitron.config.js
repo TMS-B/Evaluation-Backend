@@ -1,5 +1,3 @@
-import NODE_ENV from "process.env.NODE_ENV";
-
 (function waitForTarteaucitron(retries = 0, maxRetries = 10) {
     if (typeof window.tarteaucitron !== "undefined") {
       const lang = navigator.language;
@@ -44,12 +42,12 @@ import NODE_ENV from "process.env.NODE_ENV";
         
         // Récupère le bouton de sauvegarde
         const mutationCallback = () => { 
-            const tarteaucitron = document.getElementById("tarteaucitronSaveButton");
+            const tarteaucitronSaveButton = document.getElementById("tarteaucitronSaveButton");
             if (tarteaucitronSaveButton) {
                 const handleConsentSave = () => {
                     window.location.reload();
                 };
-                tarteaucitron.addEventListener("click", handleConsentSave);
+                tarteaucitronSaveButton.addEventListener("click", handleConsentSave);
     
                 observer.disconnect();
             }
@@ -64,14 +62,7 @@ import NODE_ENV from "process.env.NODE_ENV";
         return () => {
             observer.disconnect();
         };
-    } else if (retries < maxRetries) {
-        if (NODE_ENV === "development") {
-            console.log("Waiting for tarteaucitron to load...", retries + 1, "of", maxRetries);
-        };
+    } else (retries < maxRetries) 
         setTimeout(() => waitForTarteaucitron(retries + 1, maxRetries), 500);
-    } else {
-        if (NODE_ENV === "development") {
-            console.log("Tarteaucitron failed to load after", maxRetries, "attempts.");
-        }
     }
-})();
+)();
