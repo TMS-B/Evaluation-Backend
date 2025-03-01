@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getAllSkills, deleteSkill } from "../services/SkillService";
-import SkillCard from "../components/skillCard";
+import SkillCard from "../components/SkillCard";
 
 const Home = () => {
   const [skills, setSkills] = useState([]);

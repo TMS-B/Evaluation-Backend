@@ -1,4 +1,4 @@
-import SkillForm from "../components/skillForm"
+import SkillForm from "../components/SkillForm"
 import { createSkill } from "../services/SkillService"
 import { useNavigate } from "react-router-dom"
 
