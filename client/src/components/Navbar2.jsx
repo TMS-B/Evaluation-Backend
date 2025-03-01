@@ -15,6 +15,33 @@ const Navbar = () => {
         setIsAuth(false);   // Mettre à jour l'état
         navigate("/login"); // Rediriger vers la page de connexion
     };
+    const styles = {
+        nav: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            backgroundColor: '#333',
+            color: '#fff',
+            padding: '1rem',
+        },
+        navList: {
+            display: 'flex',
+            listStyleType: 'none',
+            margin: 0,
+            padding: 0,
+        },
+        navItem: {
+            marginRight: '1rem',
+        },
+        navLink: {
+            color: '#fff',        
+            textDecoration: 'none',
+            fontSize: '1.2rem',        
+            fontWeight: 'bold',        
+            textTransform: 'uppercase',        
+            letterSpacing: '0.1rem',
+        }
+    };
 
   return (
     <nav style={styles.nav}>
@@ -38,34 +65,6 @@ const Navbar = () => {
         </ul>
     </nav>
   );
-};
-
-const styles = {
-    nav: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#333',
-        color: '#fff',
-        padding: '1rem',
-    },
-    navList: {
-        display: 'flex',
-        listStyleType: 'none',
-        margin: 0,
-        padding: 0,
-    },
-    navItem: {
-        marginRight: '1rem',
-    },
-    navLink: {
-        color: '#fff',        
-        textDecoration: 'none',
-        fontSize: '1.2rem',        
-        fontWeight: 'bold',        
-        textTransform: 'uppercase',        
-        letterSpacing: '0.1rem',
-    }
 };
 
 export default Navbar
