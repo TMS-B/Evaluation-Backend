@@ -5,22 +5,22 @@ import cors from "cors";
 import helmet from "helmet";
 // import morgan from "morgan";
 
-import morganMiddleware from "./middleware/morganMiddleware.js";
+import morganMiddleware from "./src/middleware/morganMiddleware.js";
 
 import cookieParser from "cookie-parser";
-import errorHandler from "./middleware/errorHandler.js";
-import cloudinaryConfig from "./config/cloudinary.js";
+import errorHandler from "./src/middleware/errorHandler.js";
+import cloudinaryConfig from "./src/config/cloudinary.js";
 
 const app = express();
 
 
-import connectDB from "./config/db.js";
+import connectDB from "./src/config/db.js";
 
 const PORT = process.env.PORT;
 
-import userRoutes from "./routes/userRoute.js";
-import skillsRoutes from "./routes/skillsRoutes.js";
-import settingsRoutes from "./routes/settingsRoutes.js";
+import userRoutes from "./src/routes/userRoute.js";
+import skillsRoutes from "./src/routes/skillsRoutes.js";
+import settingsRoutes from "./src/routes/settingsRoutes.js";
 
 connectDB();
 cloudinaryConfig();
