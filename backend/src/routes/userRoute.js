@@ -32,6 +32,6 @@ router.delete(
   deleteUser
 );
 
-router.post("/login", validateRequest , validateRecaptcha, login);
+router.post("/login", validateRequest, validateRecaptcha , login);
 
 export default router;
