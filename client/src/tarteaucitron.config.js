@@ -10,7 +10,7 @@
     	  "hashtag": "#tarteaucitron", /* Open the panel with this hashtag */
     	  "cookieName": "tarteaucitron", /* Cookie name */
     	  "orientation": "middle", /* Banner position (top - bottom) */
-          "groupServices": true, /* Group services by category */
+          "groupServices": false, /* Group services by category */
           "showDetailsOnClick": true, /* Click to expand the description */
           "serviceDefaultState": "wait", /* Default state (true - wait - false) */               
     	  "showAlertSmall": false, /* Show the small banner on bottom right */

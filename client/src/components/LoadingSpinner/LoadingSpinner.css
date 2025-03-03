@@ -1,0 +1,21 @@
+.loading-spinner {
+    z-index: var(--z-modal-loading-overlay); /* 400 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loading-spinner__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loading-spinner__spinner svg {
+    font-size: 5rem;
+    margin: 0;
+    padding: 0;
+    animation: spin 1s infinite linear;
+    transform-origin: center center;
+  }
