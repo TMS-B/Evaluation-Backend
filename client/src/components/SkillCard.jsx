@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
 
   const SkillCard = ({ skill, onDelete }) => {
-    const { titre, catégorie, image, timestamp, _id } = skill;
+    const { titre, catégorie, image, createdAt, _id } = skill;
     
-    const formatDate = new Date(timestamp).toLocaleDateString("fr-FR", {
+    const formatDate = new Date(createdAt).toLocaleDateString("fr-FR", {
       day: "numeric",
       month: "long",
       year: "numeric",
@@ -60,10 +60,10 @@ import { Link } from "react-router-dom"
       <div style={styles.content}>
         <h2 style={styles.title}>{ titre }</h2>
         <p>{ catégorie }</p>
-        <p><b>Publié le</b>{ formatDate }</p>
+        <p><b>Publié le </b>{ formatDate }</p>
         <div>
           <button style={styles.deleteButton} onClick={ () => {onDelete(_id)} }>Supprimer</button>
-          <Link to={`/allSkills/${_id}`} style={styles.detailButton}>Voir les détails</Link>
+          <Link to={{ pathname: "/edit", state: { skill } }} style={styles.detailButton}>Modifier</Link>
           <Link to={`/dashboard`} style={styles.detailButton}>Voir les détails</Link>
         </div>
       </div>

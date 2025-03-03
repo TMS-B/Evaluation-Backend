@@ -11,7 +11,7 @@ export const getAllSkills = async () => {
 }
 
 export const deleteSkill = async (id) => {
-    const res = await api.delete(`/deleteSkills/:id${id}`);
+    const res = await api.delete(`/deleteSkills/${id}`, {withCredentials: true});
     return res.data;
 }
 
