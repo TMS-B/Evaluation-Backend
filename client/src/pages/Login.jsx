@@ -66,6 +66,7 @@ const Login = () => {
         localStorage.setItem("isAuth", "true");
         setIsAuth(true);
         navigate("/dashboard");
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
@@ -111,7 +112,7 @@ const Login = () => {
           {message && <p>{message}</p>}
           {loading && <LoadingSpinner loading={loading} isOverlay={true} />}  
       </form>
-      {/* {isAuth && <h1>Successfully authenticated!</h1>} */}
+      {isAuth}
     </div>
   );
 };

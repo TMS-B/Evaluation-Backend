@@ -4,13 +4,12 @@ const SkillForm = ({ initialData = {}, onSubmit, titre }) => {
 
   const [skill, setSkill] = useState({
     titre: initialData.titre || "",
-    catégorie: initialData.catégorie || "",
+    categorie: initialData.categorie || "",
     niveau: initialData.niveau || ""
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setSkill((prev) => ({
       ...prev,
       [name]: value,
@@ -45,12 +44,12 @@ const SkillForm = ({ initialData = {}, onSubmit, titre }) => {
           />
         </div>
         <div>
-          <label htmlFor="catégorie">Catégorie</label>
+          <label htmlFor="categorie">Catégorie</label>
           <input
             type="text"
-            id="catégorie"
-            name="catégorie"
-            value={skill.catégorie}
+            id="categorie"
+            name="categorie"
+            value={skill.categorie}
             onChange={handleChange}
             required
           />
@@ -63,9 +62,9 @@ const SkillForm = ({ initialData = {}, onSubmit, titre }) => {
           onChange={handleChange}
           required
           >
-            <option value="débutant">Débutant</option>
-            <option value="intermédiaire">intermédiaire</option>
-            <option value="expert">Expert</option>
+            <option value="Débutant">Débutant</option>
+            <option value="Intermédiaire">Intermédiaire</option>
+            <option value="Expert">Expert</option>
             </select> 
         </div>
         <div>
@@ -77,7 +76,7 @@ const SkillForm = ({ initialData = {}, onSubmit, titre }) => {
           accept="image/*"
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Envoyer</button>
       </form>
     </div>
   );

@@ -1,21 +1,22 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 const EditPage = ({ initialData = {}, onSubmit, titre }) => {
 
   const location = useLocation();
-  const skillData = location.state?.skill;
-  // console.log(skillData);
+  const skillData = location.state || {};
+  console.log(skillData, "skillData");
 
   const [skill, setSkill] = useState({
+    _id: skillData._id || "",
     titre: skillData.titre || "",
-    catégorie: skillData.catégorie || "",
+    categorie: skillData.categorie || "",
     niveau: skillData.niveau || ""
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setSkill((prev) => ({
       ...prev,
       [name]: value,
@@ -31,7 +32,7 @@ const EditPage = ({ initialData = {}, onSubmit, titre }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(skill);
+    onSubmit(skill._id, skill);
   };
   return (
     <div>
@@ -49,12 +50,12 @@ const EditPage = ({ initialData = {}, onSubmit, titre }) => {
           />
         </div>
         <div>
-          <label htmlFor="catégorie">Catégorie</label>
+          <label htmlFor="categorie">Catégorie</label>
           <input
             type="text"
-            id="catégorie"
-            name="catégorie"
-            value={skill.catégorie}
+            id="categorie"
+            name="categorie"
+            value={skill.categorie}
             onChange={handleChange}
             required
           />
@@ -67,9 +68,9 @@ const EditPage = ({ initialData = {}, onSubmit, titre }) => {
           onChange={handleChange}
           required
           >
-            <option value="débutant">Débutant</option>
-            <option value="intermédiaire">intermédiaire</option>
-            <option value="expert">Expert</option>
+            <option value="Débutant">Débutant</option>
+            <option value="Intermédiaire">Intermédiaire</option>
+            <option value="Expert">Expert</option>
             </select> 
         </div>
         <div>
@@ -81,7 +82,8 @@ const EditPage = ({ initialData = {}, onSubmit, titre }) => {
           accept="image/*"
           />
         </div>
-        <button type="submit">Submit</button>
+        <p>Dernière modification: {skillData.updatedAt} </p>
+        <button type="submit">Modifier</button>
       </form>
     </div>
   );

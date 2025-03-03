@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getAllSkills, deleteSkill } from "../services/SkillService";
 import SkillCard from "../components/SkillCard";
 
+
 const Home = () => {
   const [skills, setSkills] = useState([]);
 
@@ -18,7 +19,7 @@ const Home = () => {
     fetchSkills();
   }, []);
 
-  const handleDelete = async (id) => {
+const handleDelete = async (id) => {
     const isConfirmed = window.confirm(
       "Are you sure you want to delete this skill ?"
     );
@@ -33,7 +34,7 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Page Homme</h1>
+      <h1>Page Home</h1>
       <div style={styles.container}>
         <Link to={"/create"} style={styles.createLink}>
           Create new skill
