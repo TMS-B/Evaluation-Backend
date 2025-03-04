@@ -189,7 +189,7 @@ evalBackEnd/                             # Dossier racine du projet
 
 **1. Pour cloner le repository**
 
-Avec HTPPS
+Avec HTTPS
 ```bash
 https://github.com/TMS-B/Evaluation-Backend.git
 ```
