@@ -15,7 +15,7 @@ import {
   validateDeleteUser,
 } from "../validations/authValidation.js";
 
-import { validateRecaptcha } from "../middleware/reCaptcha.js";
+// import { validateRecaptcha } from "../middleware/reCaptcha.js";
 
 router.post("/registerUser", validateRegisterUser, validateRequest, registerUser);
 
@@ -32,6 +32,8 @@ router.delete(
   deleteUser
 );
 
-router.post("/login", validateRequest, validateRecaptcha , login);
+router.post("/login", validateRequest  , login);
+
 
 export default router;
+// validateRecaptcha

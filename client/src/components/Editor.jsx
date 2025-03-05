@@ -1,10 +1,16 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const SkillForm = ({ initialData = {}, onSubmit, titre }) => {
+const EditPage = ({ initialData = {}, onSubmit, titre }) => {
+  const location = useLocation();
+  const skillData = location.state || {};
+  const navigate = useNavigate();
+
   const [skill, setSkill] = useState({
-    titre: initialData.titre || "",
-    categorie: initialData.categorie || "",
-    niveau: initialData.niveau || "",
+    _id: skillData._id || "",
+    titre: skillData.titre || "",
+    categorie: skillData.categorie || "",
+    niveau: skillData.niveau || "",
   });
 
   const handleChange = (e) => {
@@ -24,13 +30,12 @@ const SkillForm = ({ initialData = {}, onSubmit, titre }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(skill);
+    onSubmit(skill._id, skill);
   };
-
   return (
     <div>
       <h1>{titre}</h1>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="titre">Titre</label>
           <input
@@ -68,13 +73,13 @@ const SkillForm = ({ initialData = {}, onSubmit, titre }) => {
             id="image"
             onChange={handleImageChange}
             accept="image/*"
-            name="image"
           />
         </div>
-        <button type="submit">Envoyer</button>
+        <p>Dernière modification: {skillData.updatedAt} </p>
+        <button type="submit">Modifier</button>
       </form>
     </div>
   );
 };
 
-export default SkillForm;
+export default EditPage;

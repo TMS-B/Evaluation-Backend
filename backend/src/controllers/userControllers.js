@@ -30,12 +30,12 @@ export async function registerUser(req, res, next) {
   }
 }
 
-export async function updateUser(req, res) {
+export const updateUser = async (req, res, next) => {
   const { id } = req.params;
   const newName = req.body.name;
   const newPassword = req.body.newPassword;
   try {
-    const updateUser = await findByIdAndUpdate(
+    const updateUser = await User.findByIdAndUpdate(
       id,
       { name: newName, password: newPassword },
       { new: true }
@@ -47,18 +47,19 @@ export async function updateUser(req, res) {
   } catch (error) {
     next(error);
   }
-}
+};
 
-export async function deleteUser(req, res, next) {
+export const deleteUser = async (req, res, next) => {
   try {
-    await findByIdAndDelete(req.params);
+    const { id } = req.params;
+    await User.findByIdAndDelete(id);
     res
       .status(200)
       .json({ message: `L'utilisateur a été supprimé avec succès !` });
   } catch (error) {
     next(error);
   }
-}
+};
 
 export async function login(req, res, next) {
   // const recaptchaSecretKey = process.env.RECAPTCHA_SITE_SECRET;
