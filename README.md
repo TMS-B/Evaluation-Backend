@@ -87,94 +87,98 @@ Ce projet est un site web portfolio construit en utilisant toute la stack MERN, 
 <!-- - **Supertest** : Pour effectuer des requêtes HTTP dans les tests. -->
 </details>
 
-## Architecture
-evalBackEnd/                             # Dossier racine du projet
-├── backEnd/                             # Backend de l'application
-│   ├── logs/
-│   │   └── log.log                      # Fichier de logs de l'application
-│   │
-│   ├── src/
-│   │   ├── config/                      # Configuration du backend
-│   │   │   ├── db.js                    # Configuration de la connexion MongoDB
-│   │   │   ├── logger.js                # Configuration des options de logs
-│   │   │   └── cloudinary.js            # Configuration des assets
-│   │   │
-│   │   ├── controllers/                 # Logique métier (fonctions appelées par les routes)
-│   │   │   ├── authControllers.js       # Gestion de l'authentification et des utilisateurs
-│   │   │   ├── skillsControllers.js     # Gestion des compétences
-│   │   │   └── settingsControllers.js   # Gestion des paramètres
-│   │   │
-│   │   ├── middlewares/                 # Fonctions intermédiaires pour les requêtes HTTP
-│   │   │   ├── authMiddleware.js        # Vérification de l'authentification
-│   │   │   ├── errorHandler.js          # Gestion des erreurs (try catch)
-│   │   │   ├── isAdmin.js               # Vérification des droits administrateurs
-│   │   │   ├── morganMiddleware.js      # Middleware de gestion des logs HTTP avec Morgan
-│   │   │   ├── validateRequest.js       # Gestion des erreurs lors de la validation de requêtes
-│   │   │   └── recaptchaMiddleware.js   # Vérification du reCaptcha
-│   │   │
-│   │   ├── models/                      # Modèles de données MongoDB (schemas Mongoose)
-│   │   │   ├── User.js                  # Modèle utilisateur
-│   │   │   ├── skillsModel.js           # Modèle compétence
-│   │   │   ├── assetsModel.js           # Modèle compétence
-│   │   │   └── settingsModel.js         # Modèle paramètres d'application
-│   │   │
-│   │   ├── routes/                      # Définition des routes de l'API
-│   │   │   ├── userRoute.js             # Routes pour l'authentification et les utilisateurs
-│   │   │   ├── settingsRoutes.js        # Routes pour les settings
-│   │   │   └── skillsRoutes.js          # Routes pour les compétences
-│   │   │
-│   │   └── validations/                 # Modèles de données MongoDB (schemas Mongoose)
-│   │       └── authValidation.js        # 
-│   │
-│   ├── .env                             # Variables d'environnement (ex : clés API)
-│   ├── .gitignore                       # Fichiers et dossiers à ignorer par Git
-│   ├── package-lock.json                # Versionnement des dépendances Node.js
-│   ├── package.json                     # Dépendances et scripts du projet backend
-│   └── app.js                           # Point d'entrée du serveur Express
-│
-├── client/                              # Frontend de l'application (React)
-│   ├── public/
-│   │   └── tarteaucitron                # Dossier complet de tarteaucitron
-│   │
-│   ├── src/
-│   │   ├── assets/                      # Fichiers statiques (images, polices, etc.)
-│   │   │   └── react.svg                #
-│   │   │
-│   │   ├── components/                  # Composants réutilisables React
-│   │   │   ├── LoadingSpinner           # Composant de spinner de chargement
-│   │   │   │   ├── LoadingSpiner.jsx    # 
-│   │   │   │   └── LoadingSpiner.css    #
-│   │   │   │      
-│   │   │   ├── Navbar.jsx               # Composant barre de navigation
-│   │   │   ├── SkillCard.jsx            # Composant carte de compétence
-│   │   │   ├── SkillDetails.jsx         # Composant carousel
-│   │   │   └──SkillForm.jsx             # Composant de formulaire de création
-│   │   │
-│   │   ├── pages/                       # Pages principales du site
-│   │   │   ├── CreateSkillPage.jsx      # Page de création de compétences
-│   │   │   ├── Dashboard.jsx            # Page du tableau de bord (après connexion)
-│   │   │   ├── Home.jsx                 # Page d'accueil
-│   │   │   ├── Login.jsx                # Page de connexion
-│   │   │   └──EditPage.jsx              # Page d'update
-│   │   │
-│   │   ├── services/                    # Fichier des services
-│   │   │   └── SkillServices.js         # Services externes
-│   │   │
-│   │   ├── tarteaucitron.js             #
-│   │   ├── App.css                      # Style global de l'application
-│   │   ├── App.jsx                      # Composant racine de l'application React
-│   │   ├── index.css                    # Styles globaux
-│   │   └── main.jsx                     # Point d'entrée React
-│   │
-│   ├── .env                             # Variables d'environnement pour le frontend
-│   ├── .gitignore                       # Fichiers à ignorer par Git (frontend)
-│   ├── eslint.config.js                 # Configuration ESLint (linting du code)
-│   ├── index.html                       # Page HTML principale
-│   ├── package-lock.json                # Versionnement des dépendances Node.js
-│   ├── package.json                     # Dépendances et scripts du projet frontend
-│   └── vite.congig.js                   # Dépendances et scripts du projet frontend
-│
+## Architecture  
+```
+evalBackEnd/                             # Dossier racine du projet  
+
+├── backEnd/                             # Backend de l'application  
+│   ├── logs/  
+│   │  
+│   │   └── log.log                      # Fichier de logs de l'application  
+│   │  
+│   ├── src/  
+│   │   ├── config/                      # Configuration du backend  
+│   │   │   ├── db.js                    # Configuration de la connexion MongoDB  
+│   │   │   ├── logger.js                # Configuration des options de logs  
+│   │   │   └── cloudinary.js            # Configuration des assets  
+│   │   │  
+│   │   ├── controllers/                 # Logique métier (fonctions appelées par les routes)  
+│   │   │   ├── authControllers.js       # Gestion de l'authentification et des utilisateurs  
+│   │   │   ├── skillsControllers.js     # Gestion des compétences  
+│   │   │   └── settingsControllers.js   # Gestion des paramètres  
+│   │   │  
+│   │   ├── middlewares/                 # Fonctions intermédiaires pour les requêtes HTTP  
+│   │   │   ├── authMiddleware.js        # Vérification de l'authentification  
+│   │   │   ├── errorHandler.js          # Gestion des erreurs (try catch)  
+│   │   │   ├── isAdmin.js               # Vérification des droits administrateurs  
+│   │   │   ├── morganMiddleware.js      # Middleware de gestion des logs HTTP avec Morgan  
+│   │   │   ├── validateRequest.js       # Gestion des erreurs lors de la validation de requêtes  
+│   │   │   └── recaptchaMiddleware.js   # Vérification du reCaptcha  
+│   │   │  
+│   │   ├── models/                      # Modèles de données MongoDB (schemas Mongoose)  
+│   │   │   ├── User.js                  # Modèle utilisateur  
+│   │   │   ├── skillsModel.js           # Modèle compétence  
+│   │   │   ├── assetsModel.js           # Modèle compétence  
+│   │   │   └── settingsModel.js         # Modèle paramètres d'application  
+│   │   │  
+│   │   ├── routes/                      # Définition des routes de l'API  
+│   │   │   ├── userRoute.js             # Routes pour l'authentification et les utilisateurs  
+│   │   │   ├── settingsRoutes.js        # Routes pour les settings  
+│   │   │   └── skillsRoutes.js          # Routes pour les compétences  
+│   │   │  
+│   │   └── validations/                 # Modèles de données MongoDB (schemas Mongoose)  
+│   │       └── authValidation.js        #  
+│   │  
+│   ├── .env                             # Variables d'environnement (ex : clés API)  
+│   ├── .gitignore                       # Fichiers et dossiers à ignorer par Git  
+│   ├── package-lock.json                # Versionnement des dépendances Node.js  
+│   ├── package.json                     # Dépendances et scripts du projet backend  
+│   └── app.js                           # Point d'entrée du serveur Express  
+│  
+├── client/                              # Frontend de l'application (React)  
+│   ├── public/  
+│   │   └── tarteaucitron                # Dossier complet de tarteaucitron  
+│   │  
+│   ├── src/  
+│   │   ├── assets/                      # Fichiers statiques (images, polices, etc.)  
+│   │   │   └── react.svg                #  
+│   │   │  
+│   │   ├── components/                  # Composants réutilisables React  
+│   │   │   ├── LoadingSpinner           # Composant de spinner de chargement  
+│   │   │   │   ├── LoadingSpiner.jsx    #   
+│   │   │   │   └── LoadingSpiner.css    #  
+│   │   │   │  
+│   │   │   ├── Navbar.jsx               # Composant barre de navigation   
+│   │   │   ├── SkillCard.jsx            # Composant carte de compétence  
+│   │   │   ├── SkillDetails.jsx         # Composant carousel  
+│   │   │   └──SkillForm.jsx             # Composant de formulaire de création  
+│   │   │  
+│   │   ├── pages/                       # Pages principales du site  
+│   │   │   ├── CreateSkillPage.jsx      # Page de création de compétences  
+│   │   │   ├── Dashboard.jsx            # Page du tableau de bord (après connexion)  
+│   │   │   ├── Home.jsx                 # Page d'accueil  
+│   │   │   ├── Login.jsx                # Page de connexion  
+│   │   │   └──EditPage.jsx              # Page d'update  
+│   │   │  
+│   │   ├── services/                    # Fichier des services  
+│   │   │   └── SkillServices.js         # Services externes  
+│   │   │  
+│   │   ├── tarteaucitron.js             #  
+│   │   ├── App.css                      # Style global de l'application  
+│   │   ├── App.jsx                      # Composant racine de l'application React  
+│   │   ├── index.css                    # Styles globaux  
+│   │   └── main.jsx                     # Point d'entrée React  
+│   │  
+│   ├── .env                             # Variables d'environnement pour le frontend  
+│   ├── .gitignore                       # Fichiers à ignorer par Git (frontend)  
+│   ├── eslint.config.js                 # Configuration ESLint (linting du code)  
+│   ├── index.html                       # Page HTML principale  
+│   ├── package-lock.json                # Versionnement des dépendances Node.js  
+│   ├── package.json                     # Dépendances et scripts du projet frontend  
+│   └── vite.congig.js                   # Dépendances et scripts du projet frontend  
+│  
 └── README.md                            # Documentation du projet (installation, usage)
+```
 
 ## Getting Started
 
