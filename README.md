@@ -93,7 +93,6 @@ evalBackEnd/                             # Dossier racine du projet
 
 ├── backEnd/                             # Backend de l'application  
 │   ├── logs/  
-│   │  
 │   │   └── log.log                      # Fichier de logs de l'application  
 │   │  
 │   ├── src/  
